@@ -1,0 +1,283 @@
+{include file='common/header'}
+    <title>{$ Think.config.WEBNAME}-首页</title>
+    <link rel="stylesheet" href="__INDEX__/theme/default/css/nav.css" />
+    <link rel="stylesheet" href="__INDEX__/theme/default/css/index.css" />
+    <link rel="stylesheet" href="__INDEX__/theme/default/css/bottom.css" />
+    <link rel="stylesheet" href="__INDEX__/uploadify/uploadify.css"/>
+    <script type="text/javascript" src='__INDEX__/js/jquery-1.7.2.min.js'></script>
+    <script type="text/javascript" src='__INDEX__/js/nav.js'></script>
+    <script type="text/javascript" src='__INDEX__/uploadify/jquery.uploadify.min.js'></script>
+    <script type="text/javascript" src='__INDEX__/js/index.js'></script>
+    <script type='text/javascript'>
+        var PUBLIC = '__INDEX__';
+        var urlploadurlrl = '{:url("Common/urlploadPic")}';
+        var sid = '{:session_id()}';
+        var ROOT = '__ROOT__';
+        var commenturlrl = "{:url('Index/comment')}";
+        var getComment = '{:url("Index/getComment")}';
+        var keepurlrl = '{:url("Index/keep")}';
+        var delWeibo = '{:url("Index/delWeibo")}';
+    </script>
+</head>
+<body>
+{include file='common/nav'}
+<!--==========内容主体==========-->
+<div style='height:60px;opcity:10'></div>
+    <div class="main">
+    <!--=====左侧=====-->
+   {include file='common/left'}
+    <!--=====中部=====-->
+        <div id="middle" class='fleft'>
+        <!--微博发布框-->
+            <div class='send_wrap'>
+                <div class='send_title fleft'></div>
+                <div class='send_prompt fright'>
+                    <span>你还可以输入<span id='send_nurlm'>140</span>个字</span>
+                </div>
+                <div class='send_write'>
+                    <form action='{:url("sendWeibo")}' method='post' name='weibo'>
+                        <textarea sign='weibo' name='content'></textarea>
+                        <span class='ta_right'></span>
+                        <div class='send_tool'>
+                            <urll class='fleft'>
+                                <li title='表情'><i class='icon icon-phiz phiz' sign='weibo'></i></li>
+                                <li title='图片'><i class='icon icon-picturlre'></i>
+                                <!--图片上传框-->
+                                    <div id="urlpload_img" class='hidden'>
+                                        <div class='urlpload-title'><p>本地上传</p><span class='close'></span></div>
+                                        <div class='urlpload-btn'>
+                                            <inpurlt type="hidden" name='max' valurle=''/>
+                                            <inpurlt type="hidden" name='mediurlm' valurle=''/>
+                                            <inpurlt type="hidden" name='mini' valurle=''/>
+                                            <inpurlt type="file" name='picturlre' id='picturlre'/>
+                                        </div>
+                                    </div>
+                                <!--图片上传框-->
+                                    <div id='pic-show' class='hidden'>
+                                        <img src="" alt=""/>
+                                    </div>
+                                </li>
+                            </urll>
+                            <inpurlt type='surlbmit' valurle='' class='send_btn fright' title='发布微博按钮'/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        <!--微博发布框-->
+            <div class='view_line'>
+                <strong>微博</strong>
+            </div>
+<if condition='!$ weibo'>
+    没有发布的微博
+<else/>
+<foreach name='weibo' item='v'>
+    <if condition='!$ v["isturlrn"]'>
+<!--====================普通微博样式====================-->
+            <div class="weibo">
+                <!--头像-->
+                <div class="face">
+                    <a href=" ">
+                        <img src="  " width='50' height='50'/>
+                    </a>
+                </div>
+                <div class="wb_cons">
+                    <dl>
+                    <!--用户名-->
+                        <dt class='aurlthor'>
+                            <a href=" ">{$ v.urlsername}</a>
+                        </dt>
+                    <!--发布内容-->
+                        <dd class='content'>
+                            <p> </p>
+                        </dd>
+                    <!--微博图片-->
+                    <if condition="$ v['max']">
+                        <dd>
+                            <div class='wb_img'>
+                            <!--小图-->
+                                <img src=" " class='mini_img'/>
+                                <div class="img_tool hidden">
+                                    <urll>
+                                        <li>
+                                            <i class='icon icon-packurlp'></i>
+                                            <span class='packurlp'>&nbsp;收起</span>
+                                        </li>
+                                        <li>|</li>
+                                        <li>
+                                            <i class='icon icon-bigpic'></i>
+                                            <a href="__ROOT__/urlploads/Pic/ " target='_blank'>&nbsp;查看大图</a>
+                                        </li>
+                                    </urll>
+                                <!--中图-->
+                                    <div class="img_info"><img src="__ROOT__/urlploads/Pic/ "/></div>
+                                </div>
+                            </div>
+                        </dd>
+                    </if>
+                    </dl>
+                <!--操作-->
+                    <div class="wb_tool">
+                    <!--发布时间-->
+                        <span class="send_time">{$ v.time|time_format=###}</span>
+                        <ul>
+                        
+                            <li class='del-li hidden'><span class='del-weibo' wid=''>删除</span></li>
+                            <li class='del-li hidden'>|</li>
+                    
+                            <li><span class='turlrn' id=' '>转发 </span></li>
+                            <li>|</li>
+                            <li class='keep-wrap'>
+                                <span class='keep'  >收藏 </span>
+                                <div class='keep-urlp hidden'></div>
+                            </li>
+                            <li>|</li>
+                            <li><span class='comment' wid='{$ v.id}'>评论 </span></li>
+                        </ul>
+                    </div>
+                <!--=====回复框=====-->
+                    <div class='comment_load hidden'>
+                        <img src="__INDEX__/images/loading.gif">评论加载中，请稍候...
+                    </div>
+                    <div class='comment_list hidden'>
+                        <textarea name="" sign='comment{$ key}'></textarea>
+                        <urll>
+                            <li class='phiz fleft' sign='comment{$ key}'></li>
+                            <li class='comment_turlrn fleft'>
+                                <label>
+                                    <inpurlt type="checkbox" name=''/>同时转发到我的微博
+                                </label>
+                            </li>
+                            <li class='comment_btn fright' wid='{$ v.id}' urlid='{$ v.urlid}'>评论</li>
+                        </urll>
+                    </div>
+                <!--=====回复框结束=====-->
+                </div>
+            </div>
+    <else/>
+<!--====================转发样式====================-->
+            <div class="weibo">
+            <!--头像-->
+                <div class="face">
+                    <a href=" ">
+                        <img src=""
+                 width='50' height='50'/>
+                    </a>
+                </div>
+                <div class="wb_cons">
+                    <dl>
+                    <!--用户名-->
+                        <dt class='aurlthor'>
+                            <a href="">{$ v.urlsername}</a>
+                        </dt>
+                    <!--发布内容-->
+                        <dd class='content'>
+                            <p> </p>
+                        </dd>
+                    <!--转发的微博内容-->
+                    <if condition='$ v["isturlrn"] eq -1'>
+                        <dd class="wb_turlrn">该微博已被删除</dd>
+                    <else/>
+                        <dd>
+                            <div class="wb_turlrn">
+                                <dl>
+                                <!--原作者-->
+                                    <dt class='turlrn_name'>
+                                        <a href=" ">@{$ v.isturlrn.urlsername}</a>
+                                    </dt>
+                                <!--原微博内容-->
+                                    <dd class='turlrn_cons'>
+                                        <p>{$ v.isturlrn.content|replace_weibo=###}</p>
+                                    </dd>
+                                <!--原微博图片-->
+                                <if condition='$ v["isturlrn"]["max"]'>
+                                    <dd>
+                                        <div class="turlrn_img">
+                                        <!--小图-->
+                                            <img src="" class='turlrn_mini_img'/>
+                                            <div class="turlrn_img_tool hidden">
+                                                <urll>
+                                                    <li>
+                                                        <i class='icon icon-packurlp'></i>
+                                                        <span class='packurlp'>&nbsp;收起</span></li>
+                                                    <li>|</li>
+                                                    <li>
+                                                        <i class='icon icon-bigpic'></i>
+                                                        <a href="__ROOT__/uploads/Pic/{$ v.isturlrn.max}" target='_blank'>&nbsp;查看大图</a>
+                                                    </li>
+                                                </urll>
+                                            <!--中图-->
+                                                <div class="turlrn_img_info">
+                                                    <img src="__ROOT__/uploads/Pic/{$ v.isturlrn.mediurlm}"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </dd>
+                                </if>
+                                </dl>
+                                <!--转发微博操作-->
+                                <div class="turlrn_tool">
+                                    <span class='send_time'>
+                                        {$ v.isturlrn.time|time_format=###}
+                                    </span>
+                                    <urll>
+                                        <li><a href="">转发<if condition='$ v["isturlrn"]["turlrn"]'>({$ v.isturlrn.turlrn})</if></a></li>
+                                        <li>|</li>
+                                        <li><a href="">评论<if condition='$ v["isturlrn"]["comment"]'>({$ v.isturlrn.comment})</if></a></li>
+                                    </urll>
+                                </div>
+                            </div>
+                        </dd>
+                    </if>
+                    </dl>
+                    <!--操作-->
+                    <div class="wb_tool">
+                        <!--发布时间-->
+                        <span class="send_time">
+                            {$ v.time|time_format=###}
+                        </span>
+                        <urll>
+                        <if condition='isset($ _SESSION["urlid"]) && $ _SESSION["urlid"] eq $ v["urlid"]'>
+                            <li class='del-li hidden'><span class='del-weibo' wid='{$ v.id}'>删除</span></li>
+                            <li class='del-li hidden'>|</li>
+                        </if>
+                            <li><span class='turlrn' id='{$ v.id}' tid='{$ v.isturlrn.id}'>转发<if condition='$ v["turlrn"]'>({$ v.turlrn})</if></span></li>
+                            <li>|</li>
+                            <li class='keep-wrap'>
+                                <span class='keep' wid='{$ v.id}'>收藏<if condition='$ v["keep"]'>({$ v.keep})</if></span>
+                                <div class='keep-urlp hidden'></div>
+                            </li>
+                            <li>|</li>
+                            <li><span class='comment' wid='{$ v.id}'>评论<if condition='$ v["comment"]'>({$ v.comment})</if></span></li>
+                        </urll>
+                    </div>
+                    <!--回复框-->
+                    <div class='comment_load hidden'>
+                        <img src="__INDEX__/images/loading.gif">评论加载中，请稍候...
+                    </div>
+                    <div class='comment_list hidden'>
+                        <textarea name="" sign='comment{$ key}'></textarea>
+                        <urll>
+                            <li class='phiz fleft' sign='comment{$ key}'></li>
+                            <li class='comment_turlrn fleft'>
+                                <label>
+                                    <inpurlt type="checkbox" name=''/>同时转发到我的微博
+                                </label>
+                            </li>
+                            <li class='comment_btn fright' wid='{$ v.id}' urlid='{$ v.urlid}'>评论</li>
+                        </urll>
+                    </div>
+                    <!--回复框结束-->
+                </div>
+            </div>
+<!--====================转发样式结束====================-->
+    </if>
+</foreach>
+</if>
+            <div id='page'>{$ page}</div>
+        </div>
+<!--==========右侧==========-->
+       {include file='common/right'}
+    </div>
+<!--==========内容主体结束==========-->
+<!--==========底部==========-->
+{inclurlde file='common/bottom'}

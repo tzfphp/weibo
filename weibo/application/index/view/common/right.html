@@ -1,0 +1,54 @@
+<div id="right">
+    <div class="edit_tpl"><a href="" class='set_model'></a></div> 
+<userinfo id=' '>
+    <dl class="user_face">
+        <dt>
+            <a href=" ">
+                <img src="__IMG__/{$userRes['face80']}" width='80' height='80' alt=" 图像" />
+            </a>
+        </dt>
+        <dd>
+            <a href="#">{$userRes['nickname']} </a>
+        </dd>
+    </dl>
+    <ul class='num_list'>
+        <li><a href=" "><strong>{$userRes['follow']} </strong><span>关注</span></a></li>
+        <li><a href=" "><strong> {$userRes['fans']}</strong><span>粉丝</span></a></li>
+        <li class='noborder'>
+            <a href=" "><strong> {$userRes['weibo']}</strong><span>微博</span></a>
+        </li>
+    </ul>
+</userinfo>
+    <div class="maybe">
+        <fieldset>
+            
+            <legend>可能感兴趣的人</legend>
+            <ul>
+                <maybe uid='$_SESSION["uid"]'>
+                    <li>
+                        <dl>
+                            <dt>
+                                <a href=" ">
+                                    <img src=" " width='30' height='30'/>
+                                </a>
+                            </dt>
+                            <dd><a href=" "> </a></dd>
+                            <dd>共{$ count}个共同好友</dd>
+                        </dl>
+                        <span class='heed_btn add-fl' uid=' '><strong>+&nbsp;</strong>关注</span>
+                    </li>
+                </maybe>
+            </ul>
+        </fieldset>
+    </div>
+    <div class="post">
+        <div class='post_line'>
+            <span>公告栏</span>
+        </div>
+        <ul>
+            <li><a href="">后盾网DIV+CSS视频教程</a></li>
+            <li><a href="">后盾网PHP视频教程</a></li>
+            <li><a href="">后盾网MySQL视频教程</a></li>
+        </ul>
+    </div>
+</div>

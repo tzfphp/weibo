@@ -1,0 +1,327 @@
+{include file='common/header'}
+	<title>{$Think.config.WEBNAME}-修改个人资料</title>
+	<link rel="stylesheet" href="__INDEX__/theme/default/css/nav.css" />
+	<link rel="stylesheet" href="__INDEX__/theme/default/css/edit.css" />
+
+          <script type="text/javascript" src="__HUI__/lib/jquery/1.9.1/jquery.min.js"></script>
+
+<script type="text/javascript" src="__HUI__/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="__HUI__/static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="__HUI__/static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer /作为公共模版分离出去-->
+	<script type="text/javascript" src='__INDEX__/js/nav.js'></script>
+
+	<script type='text/javascript' src='__INDEX__/js/edit.js'></script>
+
+
+</head>
+<body >
+<!--==========顶部固定导行条==========-->
+  {include file='Common:nav'}
+
+<!--==========内容主体==========-->
+	<div style='height:60px;opcity:10'></div>0.
++-
+    <div class="main">
+    <!--=====左侧=====-->
+       {include file='Common/left'}
+    <!--=====右侧=====-->
+    	<div id='right'>
+    		<ul id='sel-edit'>
+    			<li class='edit-cur'>基本信息</li>
+    			<li>修改头像</li>
+    			<li>修改密码</li>
+    		</ul>
+    		<div class='form'>
+    			<form   id="editBasic">
+    				<p>
+    					<label for=""><span class='red'>*</span>昵称：</label>
+    					<input type="text" name='nickname' value='{$user.nickname}' placeholder="为空就默认为账号" class='input' />
+    				</p>
+    				<p>
+    					<label for="">真实名称：</label>
+    					<input type="text" name='truename'  value='{$user.truename}' class='input'/>
+    				</p>
+    				<p>
+    					<label for=""><span class='red'>*</span>性别：</label>
+    					<input type="radio" name='sex' value='1' {if condition='$user["sex"] == "男"'}checked='checked'{/if}/>&nbsp;男&nbsp;&nbsp;&nbsp;&nbsp;
+    					<input type="radio" name='sex' value='2' {if condition='$user["sex"] == "女"'}checked='checked'{/if}/>&nbsp;女
+    				</p>
+    				<div style="margin-left: 120px;">
+    					<label for=""><span class='red'>*</span>所在地：&nbsp;&nbsp;&nbsp;&nbsp;</label>
+						<select class="select" name="province" id="provinces">
+							<option value="0">---请选择---</option>
+							{volist name="$citys['province']" id="province" }
+					        	<option value="{$province.province}" {if condition="$user['province'] eq $province['province']"} selected{/if}>{$province.province} </option>
+							{/volist}
+						</select>
+						<select class="select" name="city" id="city" >
+							<option>---请选择---</option>
+							{volist name="$citys['city']" id="city" }
+							<option value="{$city}"{if condition="$user['city'] eq $city"} selected{/if} >{$city} </option>
+							{/volist}
+						</select>
+						<select class="select" name="town" id="town">
+							<option>---请选择---</option>
+							{volist name="$citys['town']" id="town" }
+							<option value="{$town}" {if condition="$user['town'] eq $town"} selected{/if} >{$town} </option>
+							{/volist}
+						</select>
+
+    				</div>
+    				<p>
+    					<label for="">星座：</label>
+    					<select name="constellation" id="">
+    						<option value="">请选择</option>
+    						<option value="白羊座" {if condition="$user['constellation'] eq  '白羊座'"} selected{/if}>白羊座</option>
+    						<option value="金牛座"{if condition="$user['constellation'] eq  '金牛座'"} selected{/if}>金牛座</option>
+    						<option value="双子座"{if condition="$user['constellation'] eq  '双子座'"} selected{/if}>双子座</option>
+    						<option value="巨蟹座"{if condition="$user['constellation'] eq  '巨蟹座'"} selected{/if}>巨蟹座</option>
+    						<option value="狮子座"{if condition="$user['constellation'] eq  '狮子座'"} selected{/if}>狮子座</option>
+    						<option value="处女座"{if condition="$user['constellation'] eq  '处女座'"} selected{/if}>处女座</option>
+    						<option value="天秤座"{if condition="$user['constellation'] eq  '天秤座'"} selected{/if}>天秤座</option>
+    						<option value="天蝎座"{if condition="$user['constellation'] eq  '天蝎座'"} selected{/if}>天蝎座</option>
+    						<option value="射手座"{if condition="$user['constellation'] eq  '射手座'"} selected{/if}>射手座</option>
+    						<option value="魔羯座"{if condition="$user['constellation'] eq  '魔羯座'"} selected{/if}>魔羯座</option>
+    						<option value="水瓶座"{if condition="$user['constellation'] eq  '水瓶座'"} selected{/if}>水瓶座</option>
+    						<option value="双鱼座"{if condition="$user['constellation'] eq  '双鱼座'"} selected{/if}>双鱼座</option>
+    					</select>
+    				</p>
+
+    				<p>
+    					<label for="" class='intro'>一句话介绍自己：</label>
+    					<textarea name="intro">{$user.intro}</textarea>
+    				</p>
+    				<p>
+    					<input type="submit" value='保存修改' class='edit-sub'/>
+    				</p>
+    			</form>
+    		</div>
+
+    		<div class='form hidden'>
+    			<form action="{:url('editFace')}" method='post'>
+	    			<div class='edit-face'>
+                     <label for="face" style="cursor: pointer;">
+						 {if condition='$user["face180"]'}
+						 <img src=" __IMG__{$user.face180}" width='180' height='180' id='face_img' style="border-radius: 120px;"/>
+
+						 {else /}
+						 <img src=" __INDEX__/images/noface.gif" width='180' height='180' id='face_img'/>
+						 {/if}
+
+					 </label>
+	    				<p style="cursor: pointer;">
+							<label for="face"  style="display: inline-block;width:50px;color: #fff; position: relative;top: 25px; background-color:#89D623;border-radius:5px;padding: 6px 15px;cursor: pointer;">图片上传</label>
+	    					<input type="file" name='face' id='face' style="opacity:0;color: orange;"/>
+
+	    				</p>
+
+	    			</div>
+    			</form>
+    		</div>
+    		<div class='form hidden'>
+    			<form  id='editPwd'>
+    				<p class='account'>登录邮箱：<span>admin@admin.com</span></p>
+    				<p>
+    					<label for=""><span class='red'>*</span>旧密码：</label>
+    					<input type="password" name='old' class='input'/>
+    				</p>
+    				<p>
+    					<label for=""><span class='red'>*</span>新密码：</label>
+    					<input type="password" name='new' class='input' id='new'/>
+    				</p>
+    				<p>
+    					<label for=""><span class='red'>*</span>确认密码：</label>
+    					<input type="password" name='newed' class='input'/>
+    				</p>
+    				<p>
+    					<input type="submit" value='确认修改' class='edit-sub'/>
+    				</p>
+    			</form>
+    		</div>
+    	</div>
+    </div>
+<!--==========内容主体结束==========-->
+
+<script type="text/javascript" src="__HUI__/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="__HUI__/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="__HUI__/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+
+    <script type="text/javascript">
+
+        $('#face').change(function(){
+            var file = this.files[0];
+
+            // console.log(file);
+            // alert(file);
+
+         /*   if ( $("#face_img").val() !== ''){
+                layer.msg( "请先删除图片再重新上传！",{icon:5,time:2000});
+                return;
+            }*/
+
+            var data = new FormData();
+            data.append('upload_file', file);
+            $.ajax({
+                url:"{:url('UserSetting/uploads')}",
+                type:'POST',  /*提交方式*/
+                data: data,
+                cache: false,
+                contentType: false,        /*不可缺*/
+                processData: false,         /*不可缺*/
+                success:function(data){
+                    console.log(data);
+                    $("#face_img").attr('src','__IMG__'+data.src);
+
+                    if (data.code==1){
+                        layer.msg( data.msg,{icon:6,time:2000});
+                    } else{
+                        layer.msg( data.msg,{icon:5,time:2000});
+                    }
+                },
+                error:function(){
+                    layer.msg( "服务器内部发生错误",{icon:6,time:2000});
+                }
+            });
+        });
+
+
+        $(function () {
+            $("#editBasic").validate({
+                rules: {
+                    nickname: {
+                        required: true,
+                        minlength: 4,
+                        maxlength: 30
+                    },
+                    city: {
+                        required: true,
+
+                    },
+                    province: {
+                        required: true,
+
+                    },
+                    town: {
+                        required: true,
+
+                    },
+                },
+                onkeyup: false,
+                focusCleanup: true,
+                success: "valid",
+                submitHandler: function (form) {
+                    $(form).ajaxSubmit({
+                        type: 'post',
+                        url: "{:url('UserSetting/editBasic')}",
+                        success: function (data) {
+                            console.log(data) ;
+                            if (data.code == 1) {
+                                layer.msg(data.msg, {icon: 6, time: 2000});
+                            } else {
+                                layer.msg(data.msg, {icon: 5, time: 2000});
+                            }
+                        },
+                        error: function (XmlHttpRequest, textStatus, errorThrown) {
+                            layer.msg('服务器内部错误，请稍后再试', {icon: 2, time: 1000});
+                        }
+                    });
+
+                }
+            });
+
+
+
+            $("#editPwd").validate({
+                rules: {
+                    old: {
+                        required: true,
+                        minlength: 4,
+                        maxlength: 30
+                    },
+                    new: {
+                        required: true,
+                        minlength: 4,
+                        maxlength: 30
+                    },
+                    newed: {
+                        required: true,
+                        equalTo: "#new",
+                        minlength: 4,
+                        maxlength: 30
+                    },
+                },
+                onkeyup: false,
+                focusCleanup: true,
+                success: "valid",
+                submitHandler: function (form) {
+                    $(form).ajaxSubmit({
+                        type: 'post',
+                        url: "{:url('UserSetting/editPwd')}",
+                        success: function (data) {
+                            console.log(data) ;
+                            if (data.code == 1) {
+                                layer.msg(data.msg, {icon: 6, time: 2000});
+                            } else {
+                                layer.msg(data.msg, {icon: 5, time: 2000});
+                            }
+                        },
+                        error: function (XmlHttpRequest, textStatus, errorThrown) {
+                            layer.msg('服务器内部错误，请稍后再试', {icon: 2, time: 1000});
+                        }
+                    });
+
+                }
+            });
+
+
+            $("#provinces").change(function () {
+				var province=$(this).val();
+				if (province==0){
+				    return false;
+				}
+				$.ajax({
+                     type:'post',
+					  dataType:'json',
+					  url:"{:url('UserSetting/getCity')}",
+					  data:{provinces:province,city:'city'},
+				    	success:function (data) {
+                            $("#city").html('');
+					      console.log(data);
+							var html='<option value="0">--请选择---</option>';
+							for (var i=0;i<data.length;i++){
+
+							    html +='<option value="'+data[i]+'">'+data[i]+'</option>';
+							}
+							$("#city").append(html);
+                    }
+				});
+            });
+
+            $("#city").change(function () {
+                var city=$(this).val();
+                var province=$("#provinces option:selected").text();
+                if (city==0){
+                    return false;
+                }
+                $.ajax({
+                    type:'post',
+                    dataType:'json',
+                    url:"{:url('UserSetting/getCity')}",
+                    data:{province:province,city:city},
+                    success:function (data) {
+                        $("#town").html('');
+                        console.log(data);
+                        var html='<option value="0">--请选择---</option>';
+                        for (var i=0;i<data.length;i++){
+
+                            html +='<option value="'+data[i]+'">'+data[i]+'</option>';
+                        }
+                        $("#town").append(html);
+                    }
+                });
+            });
+        })
+    </script>
+
+</body>
+</html>

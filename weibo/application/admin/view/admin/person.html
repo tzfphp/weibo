@@ -1,0 +1,225 @@
+<!--_meta 作为公共模版分离出去-->
+ {include file="public/_meta"}
+
+    <title>基本设置</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页
+    <span class="c-gray en">&gt;</span>
+    个人中心
+    <span class="c-gray en">&gt;</span>
+    设置
+    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
+</nav>
+<div class="page-container">
+
+          <div id="tab-system" class="HuiTab" >
+            <div class="tabBar cl">
+                <span >个人设置</span>
+                <span  >密码修改</span>
+                <span  >账号关联</span>
+            </div>
+            <div class="tabCon">
+                <form class="form form-horizontal" id="form-article-add">
+                    <input type="hidden" name="{$admin.id}">
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-3">头像：</label>
+                        <div class="formControls col-xs-8 col-sm-7">
+                            <img  src="__SYSTEM_IMG__/{$admin.img}" class="avatar radius size-XXXL">
+                        </div>
+                    </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>用户名：</label>
+                    <div class="formControls col-xs-8 col-sm-7">
+                        <label >{$admin.username}</label>
+                    </div>
+                </div>
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>所属用户组：</label>
+                        <div class="formControls col-xs-8 col-sm-7">
+                            <label >{$admin.title}</label>
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>所属用户组：</label>
+                        <div class="formControls col-xs-8 col-sm-7">
+                            <label >{$admin.remark}</label>
+                        </div>
+                    </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>性别：</label>
+                    <div class="formControls col-xs-8 col-sm-7 skin-minimal">
+                        <div class="radio-box">
+                            <input name="sex" type="radio" id="sex-1" checked>
+                            <label for="sex-1">男</label>
+                        </div>
+                        <div class="radio-box">
+                            <input type="radio" id="sex-2" name="sex">
+                            <label for="sex-2">女</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>手机：</label>
+                    <div class="formControls col-xs-8 col-sm-7">
+                        <input type="text" class="input-text" value="{$admin.phone}" placeholder="" id="phone" name="phone">
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>邮箱：</label>
+                    <div class="formControls col-xs-8 col-sm-7">
+                        <input type="text" class="input-text" value="{$admin.email}" placeholder="@" name="email" id="email">
+                    </div>
+                </div>
+                    <div class="row cl">
+                        <div class="col-xs-10 col-sm-9 col-xs-offset-6 col-sm-offset-6">
+                            <button   class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 确认</button>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="tabCon">
+                <form class="form form-horizontal" id="form-article-password">
+                    <input type="hidden" name="{$admin.id}">
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>登陆密码：</label>
+                    <div class="formControls col-xs-8 col-sm-7">
+                        <input type="text" class="input-text"   placeholder=输入"登陆密码" id="password" name="password">
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>新密码：</label>
+                    <div class="formControls col-xs-8 col-sm-7">
+                        <input type="text" class="input-text"  placeholder="输入新密码" id="newpassword" name="newpassword">
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>确认密码：</label>
+                    <div class="formControls col-xs-8 col-sm-7">
+                        <input type="text" class="input-text"  placeholder="确认密码" name="newpasswords" id="newpasswords">
+                    </div>
+                </div>
+                    <div class="row cl">
+                        <div class="col-xs-10 col-sm-9 col-xs-offset-6 col-sm-offset-6">
+                            <button   class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 确认</button>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="tabCon">
+                <form class="form form-horizontal" id="form-article-guanlian">
+                    <input type="hidden" name="{$admin.id}">
+                    <div class="row cl">
+                        <div class="col-xs-10 col-sm-9 col-xs-offset-6 col-sm-offset-6">
+                            <button   class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 确认</button>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            </div>
+        </div>
+
+
+</div>
+
+<!--_footer 作为公共模版分离出去-->
+ {include file="public/_footer"}
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__HUI__/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="__HUI__/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="__HUI__/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="__HUI__/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $('.skin-minimal input').iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+            increaseArea: '20%'
+        });
+        $("#tab-system").Huitab({
+            index:0
+        });
+        $("#form-admin-add").validate({
+            rules:{
+                phone:{
+                    required:true,
+                    isPhone:true,
+                },
+                email:{
+                    required:true,
+                    email:true,
+                },
+            },
+            onkeyup:false,
+            focusCleanup:true,
+            success:"valid",
+            submitHandler:function(form){
+                $(form).ajaxSubmit({
+                    type: 'post',
+                    url: "person" ,
+                    success: function(data){
+                        if (data.code ==1){
+                            layer.msg(data.msg,{icon:6,time:2000});
+                        } else{
+                            layer.msg(data.msg,{icon:5,time:2000});
+                        }
+
+                    },
+                    error: function(XmlHttpRequest, textStatus, errorThrown){
+                        layer.msg('服务器内部错误，请稍后再试',{icon:1,time:1000});
+                    }
+                });
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.$('.btn-refresh').click();
+                parent.layer.close(index);
+            }
+        });
+        $("#form-admin-password").validate({
+            rules:{
+
+                password:{
+                    required:true,
+                },
+                newpassword:{
+                    required:true,
+                },
+                newpasswords:{
+                    required:true,
+                    equalTo: "#newpassword"
+                },
+
+
+            },
+            onkeyup:false,
+            focusCleanup:true,
+            success:"valid",
+            submitHandler:function(form){
+                $(form).ajaxSubmit({
+                    type: 'post',
+                    url: "password" ,
+                    success: function(data){
+                        if (data.code ==1){
+                            layer.msg(data.msg,{icon:6,time:2000});
+                        } else{
+                            layer.msg(data.msg,{icon:5,time:2000});
+                        }
+
+                    },
+                    error: function(XmlHttpRequest, textStatus, errorThrown){
+                        layer.msg('服务器内部错误，请稍后再试',{icon:1,time:1000});
+                    }
+                });
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.$('.btn-refresh').click();
+                parent.layer.close(index);
+            }
+        });
+    });
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

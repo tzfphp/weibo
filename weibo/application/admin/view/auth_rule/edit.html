@@ -1,0 +1,106 @@
+{include file="public/_meta"}
+<![endif]-->
+<title>添加权限节点 </title>
+ </head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 权限管理 <span class="c-gray en">&gt;</span>修改权限节点 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<article class="page-container">
+	<form class="form form-horizontal" id="form-admin-add">
+		<input type="hidden" name="id" value="{$oneData.id}">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3">上级权限：</label>
+			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box" style="width:150px;">
+			<select class="select" name="pid" size="1">
+				<option value="0">-- 顶级权限--</option>
+				{volist name="AuthRule" id="vo"}
+				<option value="{$vo.id}" {if condition="$oneData['pid'] eq $vo['id']"} selected{/if}>{$vo.title}</option>
+                {/volist}
+			</select>
+			</span> </div>
+		</div>
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>权限名称：</label>
+		<div class="formControls col-xs-8 col-sm-6">
+			<input type="text" class="input-text" value="{$oneData.title}" placeholder="权限名称" id="title " name="title">
+		</div>
+	</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>字段名：</label>
+			<div class="formControls col-xs-8 col-sm-6">
+				<input type="text" class="input-text" value="{$oneData.name}" placeholder="admin/index" id="name" name="name">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3">
+
+				状态：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<div class="switch" data-on="success" data-off="warning">
+					<input type="checkbox" {if condition="$oneData['status'] eq 1"} checked{/if} value="1" name="status"/>
+				</div>
+			</div>
+		</div>
+
+	<div class="row cl">
+		<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+			<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+		</div>
+	</div>
+	</form>
+</article>
+
+<!--_footer 作为公共模版分离出去-->
+{include file="public/_footer"}
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__HUI__/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="__HUI__/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="__HUI__/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('.skin-minimal input').iCheck({
+		checkboxClass: 'icheckbox-blue',
+		radioClass: 'iradio-blue',
+		increaseArea: '20%'
+	});
+	
+	$("#form-admin-add").validate({
+		rules:{
+			title:{
+				required:true,
+
+			},
+			name:{
+				required:true,
+			},
+
+		},
+		onkeyup:false,
+		focusCleanup:true,
+		success:"valid",
+		submitHandler:function(form){
+			$(form).ajaxSubmit({
+				type: 'POST',
+				url:"{:url('AuthRule/edit')}" ,
+				success: function(data){
+				    console.log(data);
+				    if (data.code ==1){
+                        layer.msg(data.msg,{icon:6,time:2000});
+					} else{
+                        layer.msg(data.msg,{icon:5,time:2000});
+					}
+
+				},
+                error: function(XmlHttpRequest, textStatus, errorThrown){
+					layer.msg('服务器内部错误，请稍后再试',{icon:1,time:1000});
+				}
+			});
+			var index = parent.layer.getFrameIndex(window.name);
+			parent.$('.btn-refresh').click();
+			parent.layer.close(index);
+		}
+	});
+});
+</script> 
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

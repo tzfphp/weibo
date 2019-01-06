@@ -1,0 +1,164 @@
+﻿{include file="public/_meta"}
+<![endif]-->
+<title>添加用户组</title>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页
+    <span class="c-gray en">&gt;</span>
+    角色管理
+    <span class="c-gray en">&gt;</span>
+     角色添加
+    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
+</nav>
+<article class="page-container">
+    <form action="" method="post" class="form form-horizontal" id="form-admin-role-add">
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>角色名称：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="" placeholder="" id="title" name="title">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">描述：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <textarea  name="remark" cols="" rows="" class="textarea"  placeholder="说点什么..."   dragonfly="true" nullmsg="备注不能为空！"  ></textarea>
+                <p class="textarea-numberbar"><em class="textarea-length">0</em>/200</p>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">
+
+                状态：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <div class="switch" data-on="success" data-off="warning">
+                    <input type="checkbox" checked value="1" name="status"/>
+                </div>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">网站角色：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <dl class="permission-list">
+                    <label style="margin-left: 5px; " class="c-orange">
+                       <input type="checkbox" id="checkbox-6" name="checkbox2" onchange="checkAll(this)">
+                        全选
+                   </label>
+                </dl>
+                {volist name="authRuleRes" id="one"}
+                <dl class="permission-list">
+                    <dt>
+                        <label>
+                            <input type="checkbox"   class="isChecked" >
+                            {$one.title}</label>
+                    </dt>
+                    <dd>
+                        {volist name="$one['child']" id="two"}
+                        <dl class="cl permission-list2">
+                            <dt style="margin-right: 10px;">
+                                <label class="" >
+                                    <input type="checkbox"    class="isChecked"   id="user-Character-0-{$two.id}">
+                                    {$two.title}</label>
+                            </dt>
+                            <dd>
+                                {volist name="$two['child']" id="three"}
+                                <label class="">
+                                    <input type="checkbox" value="{$three.id}" name="rules[]" id="user-Character-0-0-{$three.id}" class="isChecked">
+                                    {$three.title}</label>
+                                {/volist}
+
+
+                            </dd>
+                        </dl>
+                        {/volist}
+
+                    </dd>
+                </dl>
+                {/volist}
+
+            </div>
+        </div>
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+                <button type="submit" class="btn btn-success radius"  ><i class="icon-ok"></i> 确定</button>
+            </div>
+        </div>
+    </form>
+</article>
+
+{include file="public/_footer"}
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__HUI__/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="__HUI__/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="__HUI__/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript" src="__HUI__/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="__HUI__/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="__HUI__/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+
+<script type="text/javascript">
+    $(".textarea").Huitextarealength({
+        minlength:0,
+        maxlength:200
+    });
+    function  checkAll(obj){
+      if (obj.checked){
+          $(".isChecked").prop("checked",obj.checked);
+      } else{
+          $(".isChecked").prop("checked",obj.checked);
+      }
+    }
+    $(function(){
+
+        $(".permission-list dt input:checkbox").click(function(){
+            $(this).closest("dl").find("dd input:checkbox").prop("checked",$(this).prop("checked"));
+        });
+        $(".permission-list2 dd input:checkbox").click(function(){
+            var l =$(this).parent().parent().find("input:checked").length;
+            var l2=$(this).parents(".permission-list").find(".permission-list2 dd").find("input:checked").length;
+            if($(this).prop("checked")){
+                $(this).closest("dl").find("dt input:checkbox").prop("checked",true);
+                $(this).parents(".permission-list").find("dt").first().find("input:checkbox").prop("checked",true);
+            }
+            else{
+                if(l==0){
+                    $(this).closest("dl").find("dt input:checkbox").prop("checked",false);
+                }
+                if(l2==0){
+                    $(this).parents(".permission-list").find("dt").first().find("input:checkbox").prop("checked",false);
+                }
+            }
+        });
+
+        $("#form-admin-role-add").validate({
+            rules:{
+                title:{
+                    required:true,
+                },
+            },
+            onkeyup:false,
+            focusCleanup:true,
+            success:"valid",
+            submitHandler:function(form){
+                $(form).ajaxSubmit({
+                    type: 'post',
+                    url: "{:url('AuthGroup/add')}" ,
+                    success: function(data){
+                        console.log(data);
+                        if (data.code==1){
+                            layer.msg( data.msg,{icon:1,time:2000});
+                           // settimeout("location.replace(location.href)",2000);
+                        } else {
+                            layer.msg( data.msg,{icon:1,time:2000});
+                        }
+                    },
+                    error: function(XmlHttpRequest, textStatus, errorThrown){
+                        layer.msg('error!',{icon:1,time:1000});
+                    }
+                });
+
+            }
+
+        });
+    });
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>
